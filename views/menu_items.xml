@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem name="Service Schedule" id="menu_root_video_game_truck" web_icon="">
+        <menuitem id="menu_service_schedule"
+                  name="Schedule"
+                  action="video_game_truck.action_service_schedule_calendar"/>
+    </menuitem>
+</odoo>
