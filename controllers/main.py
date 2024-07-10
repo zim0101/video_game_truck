@@ -74,12 +74,13 @@ class MainControllers(http.Controller):
 
     @http.route('/service_pricing', type='http', auth="public", website=True)
     def pricing_page(self, **kwargs):
-        products = http.request.env['product.template'].search(
+        products = http.request.env['product.template'].sudo().search(
             [
                 ('sale_ok', '=', True),
                 ('purchase_ok', '=', True),
                 ('type', '=', 'service')
-            ]
+            ],
+            order='list_price asc'
         )
 
         return request.render('video_game_truck.pricing_page_template', {'products': products})
