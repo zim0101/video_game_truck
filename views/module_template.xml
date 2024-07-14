@@ -1,7 +1,0 @@
-<odoo>
-    <templates>
-        <t id="video_game_truck.TimePickerWidget" t-name="video_game_truck.TimePickerWidget">
-            <input t-att-name="widget.name" class="o_timepicker_input"/>
-        </t>
-    </templates>
-</odoo>
