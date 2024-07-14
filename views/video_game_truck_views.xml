@@ -1,0 +1,39 @@
+<odoo>
+    <!-- Tree view for Video Game Truck -->
+    <record id="view_video_game_truck_tree" model="ir.ui.view">
+        <field name="name">video_game_truck.truck.tree</field>
+        <field name="model">video_game_truck.truck</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="truck_id_number"/>
+                <field name="number_of_seats"/>
+                <field name="product_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for Video Game Truck -->
+    <record id="view_video_game_truck_form" model="ir.ui.view">
+        <field name="name">video_game_truck.truck.form</field>
+        <field name="model">video_game_truck.truck</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="truck_id_number"/>
+                    <field name="number_of_seats"/>
+                    <field name="product_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open the views -->
+    <record id="action_video_game_truck" model="ir.actions.act_window">
+        <field name="name">Video Game Trucks</field>
+        <field name="res_model">video_game_truck.truck</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_video_game_truck_tree"/>
+    </record>
+</odoo>

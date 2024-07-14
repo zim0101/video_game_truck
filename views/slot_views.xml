@@ -1,0 +1,36 @@
+<odoo>
+    <record id="view_slot_form" model="ir.ui.view">
+        <field name="name">video_game_truck.slot.form</field>
+        <field name="model">video_game_truck.slot</field>
+        <field name="arch" type="xml">
+            <form string="Slot Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="start_time"/>
+                        <field name="end_time" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_slot_tree" model="ir.ui.view">
+        <field name="name">video_game_truck.slot.tree</field>
+        <field name="model">video_game_truck.slot</field>
+        <field name="arch" type="xml">
+            <tree string="Slots">
+                <field name="name"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_slot" model="ir.actions.act_window">
+        <field name="name">Slots</field>
+        <field name="res_model">video_game_truck.slot</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

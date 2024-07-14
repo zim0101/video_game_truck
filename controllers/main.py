@@ -12,6 +12,8 @@ class MainControllers(http.Controller):
     def buy_now(self, product_template_id, **kwargs):
         booking_date = kwargs.get('booking_date')
         booking_time = kwargs.get('booking_time')
+        number_of_trucks = kwargs.get('number_of_trucks')
+        print(number_of_trucks)
 
         if not booking_date or not booking_time:
             _logger.error("Booking date or time not provided")
