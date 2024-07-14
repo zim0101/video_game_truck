@@ -41,9 +41,5 @@
                 </p>
             </field>
         </record>
-
-        <!-- Menu Item -->
-        <menuitem id="menu_slot_root" name="Time Slots" sequence="10"/>
-        <menuitem id="menu_slot" name="Manage Time Slots" parent="menu_slot_root" action="action_slot" sequence="10"/>
     </data>
 </odoo>

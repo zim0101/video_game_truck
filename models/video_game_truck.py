@@ -9,6 +9,7 @@ class VideoGameTruck(models.Model):
     truck_id_number = fields.Char(string='Truck ID Number', required=True)
     number_of_seats = fields.Integer(string='Number of Seats', required=True)
     product_id = fields.Many2one('product.template', string='Product', ondelete='set null')
+    booking_id = fields.Many2one('video_game_truck.booking', string='Booking')
 
     _sql_constraints = [
         ('truck_id_number_unique',

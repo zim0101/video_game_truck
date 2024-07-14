@@ -1,7 +1,8 @@
+import logging
+from datetime import datetime, timedelta
+from pprint import pformat
 from odoo import http
 from odoo.http import request
-import logging
-from pprint import pformat
 
 _logger = logging.getLogger(__name__)
 
@@ -86,3 +87,42 @@ class MainControllers(http.Controller):
         )
 
         return request.render('video_game_truck.pricing_page_template', {'products': products})
+
+    @http.route('/get_greeting', type='http', auth="public")
+    def get_greeting(self, **kwargs):
+        greeting = "Hello"
+        return greeting
+
+    @http.route('/fetch_available_slots', type='json', auth="public")
+    def fetch_available_slots(self, **kwargs):
+        product_id = kwargs.get('product_id')
+        booking_date = kwargs.get('booking_date')
+        number_of_trucks = kwargs.get('number_of_trucks')
+
+        available_slots = []
+        booking_date = datetime.strptime(booking_date, '%Y-%m-%d')
+        slots = request.env['video_game_truck.slot'].search([])
+        product = http.request.env['product.template'].search(
+            [
+                ('id', '=', int(product_id)),
+                ('type', '=', 'service')
+            ], limit=1
+        )
+
+        for slot in slots:
+            bookings = request.env['video_game_truck.booking'].search([
+                ('product_template_id', '=', product_id),
+                ('booking_datetime_start', '=', booking_date),
+                ('slot_id', '=', slot.id)
+            ])
+
+            if bookings:
+                for booking in bookings:
+                    if (len(product.video_game_truck_ids) - len(booking.video_game_truck_ids)) <= number_of_trucks:
+                        available_slots.append(slot)
+            else:
+                available_slots.append(slot)
+
+        print("Available slots: ", available_slots)
+
+        return available_slots
