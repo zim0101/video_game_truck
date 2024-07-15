@@ -10,5 +10,8 @@
         <menuitem id="menu_slots"
                   name="Slots"
                   action="video_game_truck.action_slot"/>
+        <menuitem id="menu_working_times"
+                  name="Working Time"
+                  action="video_game_truck.action_working_time"/>
     </menuitem>
 </odoo>
