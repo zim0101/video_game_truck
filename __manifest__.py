@@ -14,6 +14,7 @@
         'views/product_template_views.xml',
         "views/video_game_truck_views.xml",
         "views/slot_views.xml",
+        "views/working_time_views.xml",
         # menu
         "views/menu_items.xml",
     ],
