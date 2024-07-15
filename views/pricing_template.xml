@@ -24,7 +24,7 @@
                                             <hr/>
                                         </t>
                                     </ul>
-                                    <form t-attf-action="/buy_now/#{product.id}" method="post" t-att-data-product-id="product.id">
+                                    <form class="form" t-attf-action="/buy_now/#{product.id}" method="post" t-att-data-product-id="product.id">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <input t-att-id="'product_id_'+str(product.id)" type="hidden" name="product_id" t-att-value="product.id" />
                                         <div class="form-group">

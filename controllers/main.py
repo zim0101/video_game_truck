@@ -1,6 +1,6 @@
+import json
 import logging
-from datetime import datetime, timedelta
-from pprint import pformat
+from datetime import datetime
 from odoo import http
 from odoo.http import request
 
@@ -9,12 +9,15 @@ _logger = logging.getLogger(__name__)
 
 class MainControllers(http.Controller):
 
+    @http.route('/', type='http', auth="public")
+    def home(self, **kwargs):
+        return request.redirect('/service_pricing')
+
     @http.route('/buy_now/<string:product_template_id>', type='http', auth="public", website=True, methods=['POST'])
     def buy_now(self, product_template_id, **kwargs):
         booking_date = kwargs.get('booking_date')
         booking_time = kwargs.get('booking_time')
         number_of_trucks = kwargs.get('number_of_trucks')
-        print(number_of_trucks)
 
         if not booking_date or not booking_time:
             _logger.error("Booking date or time not provided")
@@ -66,11 +69,6 @@ class MainControllers(http.Controller):
         order.booking_date = booking_date
         order.booking_time = booking_time_float
 
-        order_dict = {field: getattr(order, field) for field in order._fields}
-        order_pretty = pformat(order_dict)
-
-        print('Sale Order created:\n{}'.format(order_pretty))
-
         checkout_url = '/shop/checkout'
 
         return request.redirect(checkout_url)
@@ -88,21 +86,21 @@ class MainControllers(http.Controller):
 
         return request.render('video_game_truck.pricing_page_template', {'products': products})
 
-    @http.route('/get_greeting', type='http', auth="public")
-    def get_greeting(self, **kwargs):
-        greeting = "Hello"
-        return greeting
-
-    @http.route('/fetch_available_slots', type='json', auth="public")
+    @http.route('/fetch_available_slots', type='http', auth='public')
     def fetch_available_slots(self, **kwargs):
         product_id = kwargs.get('product_id')
         booking_date = kwargs.get('booking_date')
         number_of_trucks = kwargs.get('number_of_trucks')
 
+        print(product_id, booking_date, number_of_trucks)
+
+        if product_id is None or booking_date is None or number_of_trucks is None:
+            return '{"error": "Missing required parameters"}'
+
         available_slots = []
         booking_date = datetime.strptime(booking_date, '%Y-%m-%d')
-        slots = request.env['video_game_truck.slot'].search([])
-        product = http.request.env['product.template'].search(
+        slots = request.env['video_game_truck.slot'].sudo().search([])
+        product = http.request.env['product.template'].sudo().search(
             [
                 ('id', '=', int(product_id)),
                 ('type', '=', 'service')
@@ -110,7 +108,7 @@ class MainControllers(http.Controller):
         )
 
         for slot in slots:
-            bookings = request.env['video_game_truck.booking'].search([
+            bookings = request.env['video_game_truck.booking'].sudo().search([
                 ('product_template_id', '=', product_id),
                 ('booking_datetime_start', '=', booking_date),
                 ('slot_id', '=', slot.id)
@@ -119,10 +117,23 @@ class MainControllers(http.Controller):
             if bookings:
                 for booking in bookings:
                     if (len(product.video_game_truck_ids) - len(booking.video_game_truck_ids)) <= number_of_trucks:
-                        available_slots.append(slot)
+                        available_slot = {
+                            "id": slot.id,
+                            "name": slot.name,
+                            "start_time": slot.start_time,
+                            "end_time": slot.end_time
+                        }
+                        available_slots.append(available_slot)
             else:
-                available_slots.append(slot)
+                available_slot = {
+                    "id": slot.id,
+                    "name": slot.name,
+                    "start_time": slot.start_time,
+                    "end_time": slot.end_time
+                }
+                available_slots.append(available_slot)
 
-        print("Available slots: ", available_slots)
+        # Serialize available_slots to JSON before returning
+        return json.dumps(available_slots)
 
-        return available_slots
+
