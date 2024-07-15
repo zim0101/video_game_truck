@@ -1,0 +1,45 @@
+<odoo>
+    <record id="view_working_time_form" model="ir.ui.view">
+        <field name="name">working.time.form</field>
+        <field name="model">video_game_truck.working_time</field>
+        <field name="arch" type="xml">
+            <form string="Working Time">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <group>
+                            <group>
+                                <field name="start_time" widget="selection"/>
+                                <field name="is_start_time_am"/>
+                                <field name="is_start_time_pm"/>
+                            </group>
+                            <group>
+                                <field name="end_time" widget="selection"/>
+                                <field name="is_end_time_am"/>
+                                <field name="is_end_time_pm"/>
+                            </group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_working_time_tree" model="ir.ui.view">
+        <field name="name">working.time.tree</field>
+        <field name="model">video_game_truck.working_time</field>
+        <field name="arch" type="xml">
+            <tree string="Working Times">
+                <field name="name"/>
+                <field name="start_time_display" string="Start Time"/>
+                <field name="end_time_display" string="End Time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_working_time" model="ir.actions.act_window">
+        <field name="name">Working Times</field>
+        <field name="res_model">video_game_truck.working_time</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_video_game_truck_truck,access_video_game_truck_truck,model_video_game_truck_truck,base.group_user,1,1,1,1
 access_video_game_truck_slot,access_video_game_truck_slot,model_video_game_truck_slot,base.group_user,1,1,1,1
 access_video_game_truck_booking,access_video_game_truck_booking,model_video_game_truck_booking,base.group_user,1,1,1,1
+access_video_game_truck_working_time,access_video_game_truck_working_time,model_video_game_truck_working_time,base.group_user,1,1,1,1
