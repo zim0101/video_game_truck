@@ -51,13 +51,8 @@
                 </p>
             </field>
         </record>
-<<<<<<< Updated upstream
-=======
-
         <!-- Menu Item -->
         <menuitem id="menu_slot_root" name="Video Game Truck" sequence="1"/>
-        <menuitem id="menu_slot" name="Time Slots" parent="menu_slot_root" action="action_slot" sequence="1"/>
-
->>>>>>> Stashed changes
+        <menuitem id="menu_slot" name="Time Slots" parent="menu_slot_root" action="action_slot" sequence="1"/>git
     </data>
 </odoo>
