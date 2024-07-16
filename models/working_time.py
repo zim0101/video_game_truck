@@ -118,10 +118,10 @@ class WorkingTime(models.Model):
 
             hour = int(start_time)
             minute = int((start_time - hour) * 60)
-            if hour <= 12:
+            if hour < 12:
                 time_string = f"{hour:02d}:{minute:02d}"+" AM"
             else:
-                time_string = f"{(hour-12):02d}:{minute:02d}"+" PM"
+                time_string = f"{(12 if hour==12 else hour-12):02d}:{minute:02d}"+" PM"
             time_options.append((time_string, time_string))
             start_time += 1  # 30-minute intervals
         return time_options

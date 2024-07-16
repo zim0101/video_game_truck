@@ -33,7 +33,6 @@ class Slot(models.Model):
             elif is_am_or_pm == "AM" and hour == 12:
                 hour = 0
             record.start_time_float = float(hour) + float(minute) / 60
-            print(record.start_time_float)
 
     @api.depends('end_time')
     def _compute_end_time_float(self):
@@ -46,7 +45,6 @@ class Slot(models.Model):
             elif is_am_or_pm == "AM" and hour == 12:
                 hour = 0
             record.end_time_float = float(hour) + float(minute) / 60
-            print(record.end_time_float)
 
     @api.model
     def _get_time_options(self):
@@ -56,7 +54,6 @@ class Slot(models.Model):
     @api.constrains('start_time_float', 'end_time_float')
     def _check_time_order(self):
         for record in self:
-            print(self.start_time_float, self.end_time_float)
             if record.start_time_float >= record.end_time_float:
                 raise ValidationError("Start time must be before end time.")
 
