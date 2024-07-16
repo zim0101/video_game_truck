@@ -25,6 +25,7 @@ class Slot(models.Model):
     @api.depends('start_time')
     def _compute_start_time_float(self):
         for record in self:
+            print(record.start_time)
             hour = int(record.start_time.split(':')[0])
             minute = int(record.start_time.split(':')[1].split(' ')[0])
             is_am_or_pm = record.start_time.split(':')[1].split(' ')[1]

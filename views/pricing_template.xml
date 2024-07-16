@@ -12,10 +12,14 @@
                         <div class="col-lg-4 mb-4">
                             <div class="card">
                                 <div class="card-header bg-primary text-white">
-                                    <h4 class="my-0"><t t-esc="product.name"/></h4>
+                                    <h4 class="my-0">
+                                        <t t-esc="product.name"/>
+                                    </h4>
                                 </div>
                                 <div class="card-body">
-                                    <h1 class="card-title pricing-card-title">$<t t-esc="product.list_price"/></h1>
+                                    <h1 class="card-title pricing-card-title">$
+                                        <t t-esc="product.list_price"/>
+                                    </h1>
                                     <ul class="list-unstyled mt-3 mb-4">
                                         <t t-foreach="product.attribute_line_ids" t-as="attribute">
                                             <li><t t-esc="attribute.attribute_id.name"/>:
@@ -24,26 +28,54 @@
                                             <hr/>
                                         </t>
                                     </ul>
-                                    <form class="form" t-attf-action="/buy_now/#{product.id}" method="post" t-att-data-product-id="product.id">
+                                    <form class="form" t-attf-action="/buy_now/#{product.id}" method="post"
+                                          t-att-data-product-id="product.id">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        <input t-att-id="'product_id_'+str(product.id)" type="hidden" name="product_id" t-att-value="product.id" />
+                                        <input t-att-id="'product_id_'+str(product.id)" type="hidden" name="product_id"
+                                               t-att-value="product.id"/>
                                         <div class="form-group">
-                                            <label class="mt-1" t-att-for="'booking_date_'+str(product.id)">Booking Date</label>
-                                            <input type="date" t-att-id="'booking_date_'+str(product.id)" name="booking_date" class="form-control" required="required"/>
+                                            <label class="mt-1" t-att-for="'booking_date_'+str(product.id)">Booking
+                                                Date
+                                            </label>
+                                            <input type="date" t-att-id="'booking_date_'+str(product.id)"
+                                                   name="booking_date" class="form-control input" required="required"/>
                                         </div>
                                         <div class="form-group">
-                                            <label class="mt-1" t-att-for="'number_of_trucks_'+str(product.id)">Number of Trucks</label>
-                                            <select t-att-id="'number_of_trucks_'+str(product.id)" name="number_of_trucks" class="form-control" required="required">
-                                                <t t-foreach="range(1, len(product.video_game_truck_ids) + 1)" t-as="index">
-                                                    <option t-att-value="index"><t t-esc="index"/></option>
+                                            <label class="mt-1" t-att-for="'number_of_trucks_'+str(product.id)">Number
+                                                of Trucks
+                                            </label>
+                                            <select t-att-id="'number_of_trucks_'+str(product.id)"
+                                                    name="number_of_trucks" class="form-control input"
+                                                    required="required">
+                                                <t t-foreach="range(1, len(product.video_game_truck_ids) + 1)"
+                                                   t-as="index">
+                                                    <option t-att-value="index">
+                                                        <t t-esc="index"/>
+                                                    </option>
                                                 </t>
                                             </select>
                                         </div>
-
-                                        <button type="submit" class="btn btn-lg btn-block btn-primary mt-1">Order Now</button>
+                                        <div class="slot_card container">
+                                            <div class="col-md-12 py-3 my-2 list-group-item">
+                                                <p class="mt-1 mb-n1">
+                                                    <strong>Please select the Booking Date,
+                                                        <br/>
+                                                        Number of Trucks &amp; Click the<br/>Check Availability Button
+                                                        see<br/>the available slots
+                                                    </strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="submit_button_container">
+                                            <button type="submit"
+                                                    class="btn btn-lg btn-block btn-primary mt-1 submit_button"
+                                                    style="display:None;">Order
+                                                Now
+                                            </button>
+                                        </div>
                                     </form>
 
-                                    <div>
+                                    <div class="check_button">
                                         <button class="btn btn-lg btn-block btn-primary mt-1 check-availability"
                                                 t-att-data-product-id="product.id"
                                                 t-att-data-booking-date-selector="'booking_date_'+str(product.id)"
@@ -59,7 +91,7 @@
                 </div>
             </div>
 
-            <script type="text/javascript" src="/video_game_truck/static/src/js/pricing_page.js" />
+            <script type="text/javascript" src="/video_game_truck/static/src/js/pricing_page.js"/>
         </t>
     </template>
 </odoo>
