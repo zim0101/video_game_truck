@@ -2,20 +2,25 @@
 <odoo>
     <record id="view_service_schedule_calendar" model="ir.ui.view">
         <field name="name">Service Schedule Calendar</field>
-        <field name="model">sale.order</field>
+        <field name="model">video_game_truck.booking</field>
         <field name="arch" type="xml">
             <calendar string="Service Schedule" date_start="booking_datetime_start" date_stop="booking_datetime_end">
                 <field name="name"/>
-                <field name="booking_date"/>
-                <field name="booking_time"/>
-                <field name="booking_end"/>
+                <field name="slot_id"/>
+                <field name="sale_order_id" />
+                <field name="product_template_id" />
+                <field name="number_of_trucks_ordered" />
+                <field name="video_game_truck_ids" />
+                <field name="booking_date" />
+                <field name="booking_datetime_start" />
+                <field name="booking_datetime_end" />
             </calendar>
         </field>
     </record>
 
     <record id="action_service_schedule_calendar" model="ir.actions.act_window">
         <field name="name">Service Schedule</field>
-        <field name="res_model">sale.order</field>
+        <field name="res_model">video_game_truck.booking</field>
         <field name="view_mode">calendar</field>
         <field name="view_id" ref="view_service_schedule_calendar"/>
     </record>

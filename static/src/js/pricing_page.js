@@ -45,12 +45,12 @@
                             container.setAttribute('role', 'radiogroup'); // Radio button group
                             container.classList.add('list-group-item')
                             data.forEach(function (slot) {
-                                let checkbox = document.createElement('input');
-                                checkbox.type = 'radio';
-                                checkbox.name = `product_${productId}_slot`; // Unique name for each product
-                                checkbox.value = slot.id;
-                                checkbox.id = 'slot_' + slot.id;
-                                checkbox.classList.add('mx-2')
+                                let radio = document.createElement('input');
+                                radio.type = 'radio';
+                                radio.name = 'slot'; // Unique name for each product
+                                radio.value = slot.id;
+                                radio.id = 'slot_' + slot.id;
+                                radio.classList.add('mx-2')
 
                                 let label = document.createElement('label');
                                 label.setAttribute('for', 'slot_' + slot.id);
@@ -61,9 +61,9 @@
                                 if(slot===data[data.length-1]){
                                     listItem.classList.add('mb-0')
                                 }
-                                listItem.appendChild(checkbox);
+                                listItem.appendChild(radio);
                                 listItem.appendChild(label);
-                                container.appendChild(listItem); // Add checkbox and label to container
+                                container.appendChild(listItem); // Add radio and label to container
                             });
                             if (slotDiv) {
                                 slotDiv.innerHTML=''
