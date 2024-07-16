@@ -38,28 +38,28 @@
                             const formSelector = `form[data-product-id="${productId}"]`;
                             const form = document.querySelector(formSelector);
                             console.log(form);
-                            var slotInputName = 'slot_id'; // Assuming slot.id contains a unique identifier
                             var slotContainer = document.createElement('div');
 
                             data.forEach(function (slot) {
                                 var container = document.createElement('div');
                                 container.setAttribute('role', 'radiogroup'); // Radio button group
 
-                                var checkbox = document.createElement('input');
-                                checkbox.type = 'radio';
-                                checkbox.name = `product_${productId}_slot`; // Unique name for each product
-                                checkbox.value = slot.id;
-                                checkbox.id = 'slot_' + slot.id;
+                                var radio = document.createElement('input');
+                                radio.type = 'radio';
+                                radio.name = 'slot'; // Name attribute for form submission
+                                radio.value = slot.id;
+                                radio.id = 'slot_' + slot.id;
 
                                 var label = document.createElement('label');
                                 label.setAttribute('for', 'slot_' + slot.id);
                                 label.textContent = slot.name + ': ' + slot.start_time + ' - ' + slot.end_time;
 
                                 var listItem = document.createElement('ul');
-                                listItem.appendChild(checkbox);
+                                listItem.appendChild(radio);
                                 listItem.appendChild(label);
-                                container.appendChild(listItem); // Add checkbox and label to container
-                                slotContainer.appendChild(container)
+                                container.appendChild(listItem); // Add radio and label to container
+                                slotContainer.appendChild(container);
+
                                 if (form) {
                                     form.appendChild(slotContainer);
                                 } else {

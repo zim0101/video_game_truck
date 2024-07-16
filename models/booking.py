@@ -11,22 +11,22 @@ class Booking(models.Model):
     product_template_id = fields.Many2one('product.template', string='Product', ondelete='set null')
     slot_id = fields.Many2one('video_game_truck.slot', string='Slot', ondelete='set null')
     video_game_truck_ids = fields.One2many('video_game_truck.truck', 'booking_id',
-                                           string='Video Game Trucks')
+                                           string='Assigned Video Game Trucks')
+    booking_date = fields.Date(string='Booking Date')
     booking_datetime_start = fields.Datetime(string='Booking Datetime Start', compute='_compute_booking_datetime',
                                              store=True)
     booking_datetime_end = fields.Datetime(string='Booking Datetime End', compute='_compute_booking_datetime',
                                            store=True)
+    number_of_trucks_ordered = fields.Integer(string='Number of Trucks Ordered')
 
-    @api.depends('slot_id')
+    @api.depends('slot_id', 'booking_date')
     def _compute_booking_datetime(self):
         for record in self:
             if record.slot_id:
-                now = datetime.now()
-
-                slot_start_time = datetime(year=now.year, month=now.month, day=now.day,
-                                           hour=int(record.slot_id.start_time))
-                slot_end_time = datetime(year=now.year, month=now.month, day=now.day,
-                                         hour=int(record.slot_id.end_time))
+                slot_start_time = datetime(year=record.booking_date.year, month=record.booking_date.month, day=record.booking_date.day,
+                                           hour=int(record.slot_id.start_time_float))
+                slot_end_time = datetime(year=record.booking_date.year, month=record.booking_date.month, day=record.booking_date.day,
+                                         hour=int(record.slot_id.end_time_float))
 
                 record.booking_datetime_start = slot_start_time
                 record.booking_datetime_end = slot_end_time

@@ -12,12 +12,7 @@ class SaleOrder(models.Model):
 
     booking_date = fields.Date(string='Booking Date')
     booking_time = fields.Float(string='Booking Time')
-    booking_end = fields.Float(string='Booking End', compute='_compute_booking_end', store=True)
-
-    @api.depends('booking_time')
-    def _compute_booking_end(self):
-        for order in self:
-            order.booking_end = order.booking_time + 4.0  # Adjust this calculation as needed
+    booking_end = fields.Float(string='Booking End')
 
     booking_datetime_start = fields.Datetime(string='Booking Datetime Start', compute='_compute_booking_datetime',
                                              store=True)
