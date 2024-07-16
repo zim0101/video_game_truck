@@ -13,27 +13,17 @@
                 let bookingDate = document.getElementById(bookingDateSelector).value;
                 let numberOfTrucks = document.getElementById(numberOfTrucksSelector).value;
 
-                console.log('Product ID:', productId);
-                console.log('Booking Date:', bookingDate);
-                console.log('Number of Trucks:', numberOfTrucks);
-
                 let url = '/fetch_available_slots?' +
                     'product_id=' + encodeURIComponent(productId) +
                     '&booking_date=' + encodeURIComponent(bookingDate) +
                     '&number_of_trucks=' + encodeURIComponent(numberOfTrucks);
 
-                // Fetch API request
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        // Handle the response data
-                        console.log('Availability Response:', data);
-
-                        // Clear previous availability messages and checkboxes
                         let availabilityMessage = document.querySelector('.availability-message');
-                        availabilityMessage.innerHTML = ''; // Clear previous content
+                        availabilityMessage.innerHTML = '';
 
-                        // Update UI with availability slots
                         if (data.length > 0) {
                             const slotDiv =document.querySelector('div.slot_card');
                             let slotInputName = 'slot_id'; // Assuming slot.id contains a unique identifier
@@ -42,12 +32,12 @@
                             container.classList.add('text-start')
                             container.classList.add('my-2')
                             container.classList.add('py-3')
-                            container.setAttribute('role', 'radiogroup'); // Radio button group
+                            container.setAttribute('role', 'radiogroup');
                             container.classList.add('list-group-item')
                             data.forEach(function (slot) {
                                 let radio = document.createElement('input');
                                 radio.type = 'radio';
-                                radio.name = 'slot'; // Unique name for each product
+                                radio.name = 'slot';
                                 radio.value = slot.id;
                                 radio.id = 'slot_' + slot.id;
                                 radio.classList.add('mx-2')
@@ -63,7 +53,7 @@
                                 }
                                 listItem.appendChild(radio);
                                 listItem.appendChild(label);
-                                container.appendChild(listItem); // Add radio and label to container
+                                container.appendChild(listItem);
                             });
                             if (slotDiv) {
                                 slotDiv.innerHTML=''
@@ -78,16 +68,14 @@
                             availabilityMessage.textContent = 'No available slots found.';
                         }
 
-                        // Show availability message
                         availabilityMessage.style.display = 'block';
                     })
                     .catch(error => {
                         console.error('Error fetching availability:', error);
-                        // Handle error display if needed
                     });
             });
         });
-        //code for reversing
+
         let inputFields = document.querySelectorAll('.input');
         
         inputFields.forEach(function (input){

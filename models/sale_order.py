@@ -30,20 +30,13 @@ class SaleOrder(models.Model):
                 order.booking_datetime_end = booking_datetime + timedelta(seconds=end_time)
 
     def action_cancel(self):
-        print('Cancel method is called for Sale Order {}.'.format(self.name))
         res = super(SaleOrder, self).action_cancel()
-        print('Sale Order {} has been canceled.'.format(self.name))
-
         send_sms('Your order is canceled.')
 
         return res
 
     def _create_invoices(self, grouped=False, final=False):
-        print('Custom _create_invoices method in custom_sales_log called')
         res = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
-        for invoice in res:
-            print('Invoice {} has been created for Sale Order {}.'.format(invoice.name, self.name))
-
         send_sms('Your order is confirmed.')
         send_sms("You have a sale order at {}. From {} to {}".format(self.booking_date,
                                                                      self.booking_datetime_start,
@@ -51,13 +44,3 @@ class SaleOrder(models.Model):
 
         return res
 
-    @api.model
-    def create(self, vals):
-        sale_order = super(SaleOrder, self).create(vals)
-
-        sale_order_dict = {field: getattr(sale_order, field) for field in sale_order._fields}
-        sale_order_pretty = pformat(sale_order_dict)
-
-        print('Sale Order created:\n{}'.format(sale_order_pretty))
-
-        return sale_order

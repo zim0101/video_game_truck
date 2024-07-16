@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="view_service_schedule_calendar" model="ir.ui.view">
         <field name="name">Service Schedule Calendar</field>
         <field name="model">video_game_truck.booking</field>
@@ -7,21 +8,47 @@
             <calendar string="Service Schedule" date_start="booking_datetime_start" date_stop="booking_datetime_end">
                 <field name="name"/>
                 <field name="slot_id"/>
-                <field name="sale_order_id" />
-                <field name="product_template_id" />
-                <field name="number_of_trucks_ordered" />
-                <field name="video_game_truck_ids" />
-                <field name="booking_date" />
-                <field name="booking_datetime_start" />
-                <field name="booking_datetime_end" />
+                <field name="sale_order_id"/>
+                <field name="product_template_id"/>
+                <field name="number_of_trucks_ordered"/>
+                <field name="video_game_truck_ids"/>
+                <field name="booking_date"/>
+                <field name="booking_datetime_start"/>
+                <field name="booking_datetime_end"/>
             </calendar>
+        </field>
+    </record>
+
+    <record id="view_video_game_truck_booking_form" model="ir.ui.view">
+        <field name="name">video_game_truck.booking.form</field>
+        <field name="model">video_game_truck.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sale_order_id" readonly="1"/>
+                        <field name="product_template_id" readonly="1"/>
+                        <field name="slot_id" readonly="1"/>
+                        <field name="booking_date" readonly="1"/>
+                        <field name="booking_datetime_start" readonly="1"/>
+                        <field name="booking_datetime_end" readonly="1"/>
+                        <field name="number_of_trucks_ordered" readonly="1"/>
+                        <field name="available_truck_ids" invisible="1"/> <!-- Add this field definition -->
+                        <field name="video_game_truck_ids" widget="many2many_tags"
+                               domain="[('id', 'in', available_truck_ids)]"
+                               options="{'no_create': True}"/>
+
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 
     <record id="action_service_schedule_calendar" model="ir.actions.act_window">
         <field name="name">Service Schedule</field>
         <field name="res_model">video_game_truck.booking</field>
-        <field name="view_mode">calendar</field>
+        <field name="view_mode">calendar,form</field>
         <field name="view_id" ref="view_service_schedule_calendar"/>
     </record>
 
