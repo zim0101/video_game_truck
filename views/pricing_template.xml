@@ -24,17 +24,9 @@
                                             <hr/>
                                         </t>
                                     </ul>
-                                    <form t-attf-action="/buy_now/#{product.id}" method="post">
+                                    <form t-attf-action="/book_package/#{product.id}" method="post">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        <div class="form-group">
-                                            <label class="mt-1" for="booking_date">Booking Date</label>
-                                            <input type="date" id="booking_date" name="booking_date" class="form-control" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mt-1" for="booking_time">Booking Time</label>
-                                            <input type="time" id="booking_time" name="booking_time" class="form-control" required="required"/>
-                                        </div>
-                                        <button type="submit" class="btn btn-lg btn-block btn-primary mt-1">Order Now</button>
+                                        <button type="submit" class="btn btn-lg btn-block btn-primary mt-1">Book Now</button>
                                     </form>
                                 </div>
                             </div>

@@ -8,6 +8,21 @@ _logger = logging.getLogger(__name__)
 
 class MainControllers(http.Controller):
 
+    @http.route('/book_package/<string:product_template_id>', type='http', auth="public", website=True, methods=['POST'])
+    def book_package(self, product_template_id, **kwargs):
+        product_template = http.request.env['product.template'].search(
+            [
+                ('id', '=', int(product_template_id)),
+                ('type', '=', 'service')
+            ], limit=1
+        )
+
+        if not product_template:
+            _logger.error("Product template not found: %s", product_template_id)
+            return request.redirect('/service_pricing?error=Product%20template%20not%20found')
+
+        return request.render('video_game_truck.package_booking_template', {'product': product_template})
+
     @http.route('/buy_now/<string:product_template_id>', type='http', auth="public", website=True, methods=['POST'])
     def buy_now(self, product_template_id, **kwargs):
         booking_date = kwargs.get('booking_date')
@@ -74,12 +89,13 @@ class MainControllers(http.Controller):
 
     @http.route('/service_pricing', type='http', auth="public", website=True)
     def pricing_page(self, **kwargs):
-        products = http.request.env['product.template'].search(
+        products = http.request.env['product.template'].sudo().search(
             [
                 ('sale_ok', '=', True),
                 ('purchase_ok', '=', True),
                 ('type', '=', 'service')
-            ]
+            ],
+            order='list_price asc'
         )
 
         return request.render('video_game_truck.pricing_page_template', {'products': products})

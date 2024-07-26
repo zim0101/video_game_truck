@@ -8,6 +8,7 @@
     "data": [
         "views/pricing_template.xml",
         "views/service_schedule.xml",
+        "views/package_booking.xml",
         "views/menu_items.xml",
     ],
     "installable": True,
