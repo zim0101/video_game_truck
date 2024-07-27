@@ -10,7 +10,7 @@
                     </t>
                     <t t-foreach="products" t-as="product">
                         <div class="col-lg-4 mb-4">
-                            <div class="card" style="height: 550px;">
+                            <div class="card" style="height: 600px;">
                                 <div class="card-header bg-primary text-white">
                                     <h4 class="my-0"><t t-esc="product.name"/></h4>
                                 </div>
