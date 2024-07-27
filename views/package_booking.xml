@@ -2,58 +2,74 @@
     <template id="package_booking_template" name="Package Booking">
         <t t-call="website.layout">
             <div class="container">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h3 class="my-0">
+                            Package Booking
+                        </h3>
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="card mt-5">
-                        <div class="card-header">
-                            <h3 class="my-0">
-                                Package Booking
-                            </h3>
+                    <div class="col-4">
+                        <div class="card col-12 mt-5 mb-5">
+                            <div class="card-body">
+                                <form t-attf-action="/buy_now/#{product.id}" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="mb-2">
+                                        <label for="booking_date">Booking Date</label>
+                                        <div class="input-group">
+                                            <input id="booking_date"
+                                                   type="text"
+                                                   class="input-group form-control datepicker"
+                                                   name="booking_date"
+                                                   data-date-format="yyyy-mm-dd"
+                                                   required="required"/>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text py-3">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="booking_time">Booking Time</label>
+                                        <input type="time" id="booking_time" name="booking_time" class="form-control py-3"
+                                               required="required" onclick="this.showPicker()" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Order Now</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card col-12 mt-5">
-                        <div class="card-header">
-                            <h6 class="my-0">
-                                Package: <t t-esc="product.name"/>
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <hr/>
-                            <p class="card-title pricing-card-title">
-                                Price: $<t t-esc="product.list_price"/>
-                            </p>
-                            <hr/>
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <t t-foreach="product.attribute_line_ids" t-as="attribute">
-                                    <li><t t-esc="attribute.attribute_id.name"/>:
-                                        <t t-raw="', '.join([value.name for value in attribute.value_ids])"/>
-                                    </li>
-                                    <hr/>
-                                </t>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card col-12 mt-5 mb-5">
-                        <div class="card-body">
-                            <form t-attf-action="/buy_now/#{product.id}" method="post">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                <div class="form-group mt-3">
-                                    <label for="booking_date">Booking Date</label>
-                                    <input type="date" id="booking_date" name="booking_date" class="form-control"
-                                           required="required"/>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="booking_time">Booking Time</label>
-                                    <input type="time" id="booking_time" name="booking_time" class="form-control"
-                                           required="required"/>
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-3">Order Now</button>
-                            </form>
+                    <div class="col-8 mb-5">
+                        <div class="card col-12 mt-5">
+                            <div class="card-header">
+                                <h6 class="my-0">
+                                    Package:
+                                    <t t-esc="product.name"/>
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-title pricing-card-title">
+                                    Price: $
+                                    <t t-esc="product.list_price"/>
+                                </p>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <t t-foreach="product.attribute_line_ids" t-as="attribute">
+                                        <hr/>
+                                        <li><t t-esc="attribute.attribute_id.name"/>:
+                                            <t t-raw="', '.join([value.name for value in attribute.value_ids])"/>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <link rel="stylesheet" href="/web/static/lib/bootstrap/scss/bootstrap.scss"/>
+            <script type="text/javascript" src="/web/static/lib/jquery/jquery.js"/>
+            <script type="text/javascript" src="/video_game_truck/static/src/js/package_booking.js"/>
         </t>
     </template>
 </odoo>

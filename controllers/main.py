@@ -2,11 +2,16 @@ from odoo import http
 from odoo.http import request
 import logging
 from pprint import pformat
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
 
 class MainControllers(http.Controller):
+
+    @http.route('/', type='http', auth="public")
+    def home(self, **kwargs):
+        return request.redirect('/service_pricing')
 
     @http.route('/book_package/<string:product_template_id>', type='http', auth="public", website=True, methods=['POST'])
     def book_package(self, product_template_id, **kwargs):
@@ -26,6 +31,7 @@ class MainControllers(http.Controller):
     @http.route('/buy_now/<string:product_template_id>', type='http', auth="public", website=True, methods=['POST'])
     def buy_now(self, product_template_id, **kwargs):
         booking_date = kwargs.get('booking_date')
+        booking_date = datetime.strptime(str(booking_date), '%m/%d/%Y').date()
         booking_time = kwargs.get('booking_time')
 
         if not booking_date or not booking_time:
@@ -50,7 +56,7 @@ class MainControllers(http.Controller):
 
         if overlapping_orders:
             _logger.error("Booking slot overlaps with existing orders")
-            return request.redirect('/service_pricing?error=Booking%20slot%20is%20not%20available')
+            return request.redirect('/service_pricing?error=The%20selected%20booking%20time%20is%20already%20taken.%20Please%20choose%20a%20different%20time.')
 
         product_template = http.request.env['product.template'].search(
             [
